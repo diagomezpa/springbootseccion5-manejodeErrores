@@ -10,6 +10,8 @@ public class AppController {
 
     @GetMapping("/app")
     public String index() {
+        int value = 10 / 0;
+        System.out.println("value: " + value);
         return "ok 200";
     }
     
