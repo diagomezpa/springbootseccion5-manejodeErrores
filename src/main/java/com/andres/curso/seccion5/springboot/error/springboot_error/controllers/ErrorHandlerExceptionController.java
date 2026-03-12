@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.andres.curso.seccion5.springboot.error.springboot_error.models.Error;
 
@@ -23,8 +24,23 @@ public class ErrorHandlerExceptionController {
 
         //return ResponseEntity.internalServerError().body(error);
         return ResponseEntity.status(500).body(error);
-        
-        
-        
     }
+
+
+    @ExceptionHandler({NoHandlerFoundException.class})
+    public ResponseEntity<Error> notFoundEx (NoHandlerFoundException ex){
+
+        Error error = new Error();
+        error.setMessage(ex.getMessage());
+        error.setError("Not found");
+        error.setStatus(404);
+        error.setDate(new java.util.Date());
+
+        return ResponseEntity.status(404).body(error);
+
+    }
+
+
+
+
 }
